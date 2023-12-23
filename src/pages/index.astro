@@ -16,11 +16,13 @@ const coaches = await getCoaches();
             class="rounded-2xl w-full aspect-3/4 hover:scale-105 delay-75 relative overflow-hidden hover:cursor-pointer"
           >
             <Image
-              src={`/coach/${coach.id}.jpg`}
+              src={`/coach/${coach.id}.webp`}
               width={300}
               height={600}
               alt={coach.name}
               class="h-full w-full object-cover contrast-75"
+              decoding="async"
+              loading="lazy"
             />
             <div class="absolute top-0 bottom-0 right-0 left-0 flex flex-col justify-end p-4 w-full text-white">
               <h2 class="text-xl font-bold">{coach.name}</h2>
