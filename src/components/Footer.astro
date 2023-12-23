@@ -1,0 +1,15 @@
+---
+import { getLangFromUrl } from "../i18n/utils.ts";
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<div class="w-full h-[1px] bg-white"></div>
+<div class="text-white p-4 flex">
+  <a class={`mx-2 ${lang === "de" ? "font-bold" : ""}`} href={"/"}
+    >{"Deutsch"}</a
+  >
+  <a class={`mx-2 ${lang === "en" ? "font-bold" : ""}`} href={"/en/"}
+    >{"Englisch"}</a
+  >
+</div>
