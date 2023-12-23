@@ -12,4 +12,5 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  prefetch: true,
 });

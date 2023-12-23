@@ -15,6 +15,7 @@ const coaches = await getCoaches();
           <a
             href={`/en/coach/${coach.id}`}
             class="rounded-2xl w-full aspect-3/4 hover:scale-105 delay-75 relative overflow-hidden hover:cursor-pointer"
+            data-astro-prefetch
           >
             <Image
               src={`/coach/${coach.id}.webp`}
