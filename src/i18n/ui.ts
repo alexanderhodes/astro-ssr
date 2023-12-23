@@ -7,13 +7,16 @@ export const defaultLang = "de";
 export const showDefaultLang = false;
 
 export const ui = {
+  de: {
+    "nav.home": "Home",
+    "nav.about": "Über uns",
+    "nav.search": "Suche",
+    "nav.twitter": "Twitter",
+  },
   en: {
     "nav.home": "Home",
     "nav.about": "About",
+    "nav.search": "Search",
     "nav.twitter": "Twitter",
-  },
-  fr: {
-    "nav.home": "Accueil",
-    "nav.about": "À propos",
   },
 } as const;
