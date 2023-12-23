@@ -1,14 +1,36 @@
 ---
 import { Image } from "astro:assets";
-import Layout from "../layouts/Layout.astro";
-import { getCoaches } from "../server/api";
+import Layout from "../../layouts/Layout.astro";
+import { getCoachTags, getCoaches } from "../../server/api";
 
-const coaches = await getCoaches({ tag: null });
+export const prerender = false;
+
+const params = Astro.url;
+const tag = params.searchParams.get("tag");
+
+const coaches = await getCoaches({ tag });
+const tags = await getCoachTags();
 ---
 
 <Layout title="Alle Coaches.">
   <main>
-    <h1 class="text-2xl font-bold">Alle Coaches</h1>
+    <h1 class="text-2xl font-bold">Suche</h1>
+    <div class="flex flex-row space-x-2 mb-3">
+      {
+        tags.map((t) => (
+          <a
+            href={`/search?tag=${t}`}
+            class={`text-sm px-2 py-1 rounded-md hover:cursor-pointer hover:bg-gray-700 ${
+              t === tag
+                ? "border-gray-800 bg-white text-gray-800"
+                : "text-white bg-gray-800"
+            }`}
+          >
+            {t}
+          </a>
+        ))
+      }
+    </div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {
         coaches.map((coach) => (
@@ -31,6 +53,13 @@ const coaches = await getCoaches({ tag: null });
             </div>
           </a>
         ))
+      }
+      {
+        coaches.length === 0 && (
+          <div class="text-center text-white">
+            <p>Keine Coaches gefunden.</p>
+          </div>
+        )
       }
     </div>
   </main>

@@ -24,7 +24,7 @@ const coaches = [
     name: "Jannis",
     tag: "Fitness Coach",
     id: "coach-3",
-    tags: ["Life", "Relation", "Fitness"],
+    tags: ["Life", "Relation", "Business"],
     description:
       "Ich bin Jannis und ich bin seit 10 Jahren Personal Trainer. Ich habe schon vielen Menschen geholfen, ihre Ziele zu erreichen.",
   },
@@ -33,7 +33,7 @@ const coaches = [
     name: "Cora",
     tag: "Life Coach",
     id: "coach-4",
-    tags: ["Life", "Relation", "Fitness"],
+    tags: ["Life", "Fitness"],
     description:
       "Ich bin Cora und ich bin seit 10 Jahren Personal Trainer. Ich habe schon vielen Menschen geholfen, ihre Ziele zu erreichen.",
   },
@@ -42,7 +42,7 @@ const coaches = [
     name: "Mateo",
     tag: "Life Coach",
     id: "coach-5",
-    tags: ["Life", "Relation", "Fitness"],
+    tags: ["Business", "Fitness"],
     description:
       "Hey, ich bin Mateo und ich bin seit zwei Jahren Life Coach in Köln. Life Coaching ist für mich eine Herzensangelegenheit. Es inspiriert mich, Menschen dabei zu helfen, ihr volles Potenzial zu entfalten.",
   },
@@ -51,7 +51,7 @@ const coaches = [
     name: "Niko",
     tag: "Nutrition Coach",
     id: "coach-6",
-    tags: ["Life", "Relation", "Fitness"],
+    tags: ["Life", "Business"],
     description:
       "Nutrition Coaching ist für mich eine Herzensangelegenheit. Es inspiriert mich, Menschen dabei zu helfen, ihr volles Potenzial zu entfalten.",
   },
@@ -60,7 +60,7 @@ const coaches = [
     name: "Vici",
     tag: "Life Coach",
     id: "coach-7",
-    tags: ["Life", "Relation", "Fitness"],
+    tags: ["Life", "Business"],
     description:
       "Ich kümmere mich um alle Herzensangelegenheiten. Es inspiriert mich, Menschen dabei zu helfen, ihr volles Potenzial zu entfalten.",
   },
@@ -69,7 +69,7 @@ const coaches = [
     name: "Sandra",
     tag: "Life Coach",
     id: "coach-8",
-    tags: ["Life", "Relation", "Fitness"],
+    tags: ["Relation", "Fitness"],
     description:
       "Life Coaching hat mein Leben verändert. Mein Wissen will ich teilen, um andere Menschen zu inspirieren und ihnen neue Perspektiven zu eröffnen.",
   },
@@ -78,12 +78,25 @@ const coaches = [
     name: "Toni",
     tag: "Life Coach",
     id: "coach-9",
-    tags: ["Life", "Relation", "Fitness"],
+    tags: ["Business"],
     description:
       "Ich bin Toni und ich bin seit 10 Jahren Personal Trainer. Ich habe schon vielen Menschen geholfen, ihre Ziele zu erreichen.",
   },
 ];
 
-export const getCoaches = async (): Promise<Coach[]> => {
+export const getCoaches = async (filter: {
+  tag: string | null;
+}): Promise<Coach[]> => {
+  if (filter.tag !== null) {
+    return coaches.filter((coach) =>
+      coach.tags.some((tag) => tag === filter.tag)
+    );
+  }
+
   return coaches;
+};
+
+export const getCoachTags = async (): Promise<string[]> => {
+  const tags = coaches.map((coach) => coach.tags).flat();
+  return [...new Set(tags)];
 };

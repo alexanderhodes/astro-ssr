@@ -5,7 +5,7 @@ import type { Coach } from "../../interfaces/coach";
 import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
-  const coaches = await getCoaches();
+  const coaches = await getCoaches({ tag: null });
 
   return coaches.map((coach) => ({
     params: { id: coach.id },

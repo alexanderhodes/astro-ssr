@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import { getCoaches } from "../../server/api";
 
-const coaches = await getCoaches();
+const coaches = await getCoaches({ tag: null });
 ---
 
 <Layout title="All Coaches.">
