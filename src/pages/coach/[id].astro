@@ -1,0 +1,58 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCoaches } from "../../server/api";
+import type { Coach } from "../../interfaces/coach";
+
+export async function getStaticPaths() {
+  const coaches = await getCoaches();
+
+  return coaches.map((coach) => ({
+    params: { id: coach.id },
+    props: coach,
+  }));
+}
+
+type Props = Coach;
+
+const coach = Astro.props;
+
+const img = "/coach/" + coach.id + ".jpg";
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <div class="text-white bg-red-300 rounded-3xl p-4 flex mb-2">
+      <img
+        src={img}
+        alt={coach.name}
+        class="h-24 aspect-square rounded-2xl object-cover"
+      />
+      <div class="ml-2">
+        <h1 class="text-xl font-bold">{coach.name}</h1>
+        <p class="text-sm">{coach.location}</p>
+      </div>
+    </div>
+    <div class="text-white bg-red-300 rounded-2xl p-4 flex mb-2">
+      <p class="text-base">
+        {coach.description}
+      </p>
+    </div>
+    <div class="text-white bg-red-300 rounded-2xl p-4 flex mb-2">
+      <p class="text-base">
+        {coach.tags.join(" | ")}
+      </p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+</style>
