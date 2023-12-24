@@ -1,32 +1,30 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel/serverless";
-
 import sitemap from "@astrojs/sitemap";
+
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://astro-ssr-psi.vercel.app",
-  integrations: [
-    tailwind(),
-    sitemap({
-      i18n: {
-        defaultLocale: "de",
-        locales: {
-          de: "de-DE",
-          en: "en-US",
-        },
-      },
-    }),
-  ],
+  integrations: [tailwind(), sitemap({
+    i18n: {
+      defaultLocale: "de",
+      locales: {
+        de: "de-DE",
+        en: "en-US"
+      }
+    }
+  }), react()],
   i18n: {
     defaultLocale: "de",
     locales: ["de", "en"],
     routing: {
-      prefixDefaultLocale: false,
-    },
+      prefixDefaultLocale: false
+    }
   },
   prefetch: true,
   output: "hybrid",
-  adapter: vercel(),
+  adapter: vercel()
 });

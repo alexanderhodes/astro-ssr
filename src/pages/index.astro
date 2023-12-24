@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { getCoaches } from "../server/api";
+import { Counter } from "../components/react/Counter";
 
 const coaches = await getCoaches({ tag: null });
 ---
@@ -33,6 +34,8 @@ const coaches = await getCoaches({ tag: null });
         ))
       }
     </div>
+    <h2 class="text-2xl font-bold mt-8">Counter</h2>
+    <Counter client:load />
   </main>
 </Layout>
 
