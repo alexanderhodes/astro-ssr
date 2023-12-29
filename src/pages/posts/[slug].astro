@@ -4,7 +4,6 @@ import { getCollection, getEntry } from "astro:content";
 
 type Props = { slug: string; data: { title: string } };
 const { slug } = Astro.props;
-console.log("slug", slug); // "my-first-post
 
 const post = await getEntry("posts", slug);
 
