@@ -3,8 +3,11 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { getCoaches } from "../server/api";
 import { Counter } from "../components/react/Counter";
+import { getCollection } from "astro:content";
 
 const coaches = await getCoaches({ tag: null });
+
+const posts = await getCollection("posts");
 ---
 
 <Layout title="Alle Coaches.">
@@ -42,6 +45,18 @@ apple.com/pro-display-xdr/"
       integer vitae justo eget magna fermentum iaculis eu. Etiam erat velit
       scelerisque in dictum. Ut lectus arcu bibendum at varius vel pharetra.
     </p>
+    <div class="mb-2">
+      <ul>
+        {
+          posts.map((post) => (
+            <li>
+              <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {
         coaches.map((coach) => (

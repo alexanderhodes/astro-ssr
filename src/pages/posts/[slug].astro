@@ -1,0 +1,34 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, getEntry } from "astro:content";
+
+type Props = { slug: string; data: { title: string } };
+const { slug } = Astro.props;
+console.log("slug", slug); // "my-first-post
+
+const post = await getEntry("posts", slug);
+
+if (!post) {
+  return {
+    status: 404,
+  };
+}
+
+const { Content } = await post.render();
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+---
+
+<Layout title={post.data.title}>
+  <main class="text-white">
+    <h1>{post.data.title}</h1>
+    <Content />
+  </main>
+</Layout>
