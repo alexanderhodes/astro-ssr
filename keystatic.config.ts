@@ -4,6 +4,10 @@ export default config({
   storage: {
     kind: "local",
   },
+  ui: {
+    brand: { name: "Coacheria" },
+    navigation: ["---", "authors", "---", "posts"],
+  },
   collections: {
     posts: collection({
       label: "Posts",
@@ -21,6 +25,30 @@ export default config({
             directory: "public/images/posts",
             publicPath: "/images/posts",
           },
+        }),
+        authors: fields.array(
+          fields.relationship({
+            collection: "authors",
+            label: "Authors",
+            description: "A list of authors for this post.",
+          }),
+          {
+            label: "Authors",
+            itemLabel: (props) => props?.value ?? "-",
+          }
+        ),
+      },
+    }),
+    authors: collection({
+      label: "Authors",
+      slugField: "name",
+      path: "src/content/authors/*",
+      schema: {
+        name: fields.slug({ name: { label: "Name" } }),
+        avatar: fields.image({
+          label: "Avatar",
+          directory: "public/images/authors",
+          publicPath: "/images/authors",
         }),
       },
     }),

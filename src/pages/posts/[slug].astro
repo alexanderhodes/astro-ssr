@@ -1,33 +1,45 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection, getEntry } from "astro:content";
-
-type Props = { slug: string; data: { title: string } };
-const { slug } = Astro.props;
-
-const post = await getEntry("posts", slug);
-
-if (!post) {
-  return {
-    status: 404,
-  };
-}
-
-const { Content } = await post.render();
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
+  const authors = await getCollection("authors");
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
+  return posts.map((post) => {
+    const postAuthors = authors.filter((author) =>
+      post.data.authors.some((authorId) => authorId === author.id)
+    );
+
+    return {
+      params: { slug: post.slug },
+      props: { post, authors: postAuthors },
+    };
+  });
 }
+
+const { post, authors } = Astro.props;
+const { Content } = await post.render();
 ---
 
 <Layout title={post.data.title}>
-  <main class="text-white">
+  <div class="text-white p-4">
     <h1>{post.data.title}</h1>
+    <div class="flex space-x-2">
+      {
+        authors.map((author) => (
+          <div class="flex items-center">
+            <img
+              src={author.data.avatar}
+              alt={author.data.name}
+              class="w-12 h-12 rounded-full object-cover"
+            />
+            <p class="ml-2 text-lg font-bold">{author.data.name}</p>
+          </div>
+        ))
+      }
+    </div>
+    <hr class="my-2" />
     <Content />
-  </main>
+  </div>
 </Layout>
