@@ -83,6 +83,12 @@ apple.com/pro-display-xdr/"
     </div>
     <h2 class="text-2xl font-bold mt-8">Counter</h2>
     <Counter client:only="react" />
+    <p class="text-base font-bold my-3 flex items-center">
+      Counter Value:&nbsp;
+      <span class="text-red-500 font-bold text-2xl" id="count">
+        {0}
+      </span>
+    </p>
   </main>
 </Layout>
 
@@ -91,7 +97,11 @@ apple.com/pro-display-xdr/"
 
   // Listen to changes in the store, and show/hide the dialog accordingly
   $count.subscribe((count) => {
-    console.log("count", new Date(), count);
+    const element = document.getElementById("count");
+
+    if (element) {
+      element.innerHTML = String(count);
+    }
   });
 </script>
 
