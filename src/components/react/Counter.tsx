@@ -15,7 +15,7 @@ export const Counter = () => {
 
   return (
     <div className="flex space-x-2">
-      <p>Count: {open}</p>
+      <p>Count: {open.value}</p>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Decrement</button>
     </div>

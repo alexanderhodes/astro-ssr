@@ -1,13 +1,22 @@
-import { action, atom } from "nanostores";
+import { persistentAtom } from "@nanostores/persistent";
+import { action } from "nanostores";
 
-export const $count = atom(0);
+// instead of using atom, you can use persistentAtom
+export const $count = persistentAtom<{ value: number }>(
+  "count",
+  { value: 0 },
+  {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  }
+);
 
 export const increaseCount = action($count, "increase", (store) => {
-  store.set(store.get() + 1);
+  store.set({ value: store.get().value + 1 });
   return store.get();
 });
 
 export const decreaseCount = action($count, "decrease", (store) => {
-  store.set(store.get() - 1);
+  store.set({ value: store.get().value - 1 });
   return store.get();
 });
