@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import { getCoaches } from "../server/api";
+import { Counter } from "../components/react/Counter";
+import { getCollection } from "astro:content";
+
+const coaches = await getCoaches({ tag: null });
+
+const posts = await getCollection("posts");
+---
+
+<Layout title="Alle Coaches.">
+  <main>
+    <h1 class="text-2xl font-bold text-white">Canvas</h1>
+    <textarea id="text" class="w-full h-64 bg-white"></textarea>
+    <canvas id="canvas" class="h-64 w-[300px] bg-red"></canvas>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const text = document.getElementById("text");
+
+      text?.addEventListener("input", (e) => {
+        const value = e.target.value;
+
+        if (canvas && canvas instanceof HTMLCanvasElement) {
+          const ctx = canvas.getContext("2d");
+          ctx?.clearRect(0, 0, canvas.width, canvas.height);
+
+          if (ctx) {
+            ctx.fillStyle = "#FD0";
+            ctx?.fillRect(0, 0, canvas.width, canvas.height);
+            var x = 20;
+            var y = 20;
+            var lineheight = 15;
+            var lines = value.split("\n");
+
+            for (var i = 0; i < lines.length; i++) {
+              ctx.font = "18px Arial";
+              ctx.fillStyle = "white";
+              ctx.fillText(lines[i], x, y + i * lineheight, 300);
+            }
+
+            // const img = new Image();
+            // // img.src = "/assets/images/astro.png";
+            // img.onload = () => {
+            //   ctx.drawImage(img, 0, 0);
+            // };
+          }
+        }
+      });
+    </script>
+  </main>
+</Layout>
