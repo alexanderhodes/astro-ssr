@@ -20,7 +20,8 @@ const posts = await getCollection("posts");
       const text = document.getElementById("text");
 
       text?.addEventListener("input", (e) => {
-        const value = e.target.value;
+        const value =
+          e.target && "value" in e?.target ? (e.target?.value as string) : "";
 
         if (canvas && canvas instanceof HTMLCanvasElement) {
           const ctx = canvas.getContext("2d");
@@ -39,12 +40,6 @@ const posts = await getCollection("posts");
               ctx.fillStyle = "white";
               ctx.fillText(lines[i], x, y + i * lineheight, 300);
             }
-
-            // const img = new Image();
-            // // img.src = "/assets/images/astro.png";
-            // img.onload = () => {
-            //   ctx.drawImage(img, 0, 0);
-            // };
           }
         }
       });
